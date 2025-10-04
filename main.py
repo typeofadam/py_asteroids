@@ -26,7 +26,9 @@ def main():
                 return
         
         screen.fill("black") # add background first
-        player.draw(screen)
+        
+        player.update(dt) # updated player first
+        player.draw(screen) # then draw player
         # ALWAYS END LOOP WITH FLIP AND TICK
         pygame.display.flip()
         dt = game_clock.tick(60) / 1000
