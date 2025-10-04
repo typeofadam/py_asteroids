@@ -12,10 +12,18 @@ def main():
     dt = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     
+    ## Create pygame groups
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    # Add classes to groups
+    Player.containers = (updateable, drawable)
+
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
+    ## Init Objects
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
     ##### Game Loop ####
@@ -27,8 +35,9 @@ def main():
         
         screen.fill("black") # add background first
         
-        player.update(dt) # updated player first
-        player.draw(screen) # then draw player
+        updateable.update(dt) # update all sprites
+        for sprite in drawable:
+            sprite.draw(screen)
         # ALWAYS END LOOP WITH FLIP AND TICK
         pygame.display.flip()
         dt = game_clock.tick(60) / 1000
